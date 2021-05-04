@@ -16,7 +16,7 @@ addon_base = { "apt": { "packages": [ "software-properties-common", "libffi-dev"
 
 def main(ctx):
   return [
-  linux_cxx("docs", "g++", packages="docbook docbook-xml docbook-xsl xsltproc libsaxonhe-java default-jre-headless flex", buildtype="docs", buildscript="drone", image="cppalliance/droneubuntu1604:1", environment={'DRONE_JOB_UUID': 'b6589fc6ab'}, globalenv=globalenv),
+  linux_cxx("docs", "g++", packages="docbook docbook-xml docbook-xsl xsltproc libsaxonhe-java default-jre-headless flex libfl-dev bison unzip", buildtype="docs", buildscript="drone", image="cppalliance/droneubuntu1604:1", environment={'DRONE_JOB_UUID': 'b6589fc6ab'}, globalenv=globalenv),
   linux_cxx("GCC 6.0, Debug + Coverage", "g++-6", packages=" ".join(addon_base["apt"]["packages"]) + " g++-6 libssl-dev", buildtype="boost", buildscript="drone", image=linuxglobalimage, environment={'VARIANT': 'beast_coverage', 'TOOLSET': 'gcc', 'COMPILER': 'g++-6', 'CXXSTD': '14', 'DRONE_JOB_UUID': '356a192b79'}, globalenv=globalenv),
   linux_cxx("Default clang++ with libc++", "clang++-libc++", packages=" ".join(addon_base["apt"]["packages"]) + " libc++-dev", buildtype="boost", buildscript="drone", image=linuxglobalimage, environment={'VARIANT': 'debug', 'TOOLSET': 'clang', 'COMPILER': 'clang++-libc++', 'CXXSTD': '11', 'CXX_FLAGS': '<cxxflags>-stdlib=libc++ <linkflags>-stdlib=libc++', 'DRONE_JOB_UUID': 'da4b9237ba'}, globalenv=globalenv),
   linux_cxx("GCC Valgrind", "g++", packages=" ".join(addon_base["apt"]["packages"]) + " g++-7 libssl-dev valgrind", buildtype="boost", buildscript="drone", image="cppalliance/droneubuntu2004:1", environment={'VARIANT': 'beast_valgrind', 'TOOLSET': 'gcc', 'COMPILER': 'g++', 'CXXSTD': '11', 'DRONE_JOB_UUID': '77de68daec'}, globalenv=globalenv),
