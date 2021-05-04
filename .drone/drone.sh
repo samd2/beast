@@ -16,11 +16,26 @@ export USER=$(whoami)
 export CC=${CC:-gcc}
 export PATH=~/.local/bin:/usr/local/bin:$PATH
 
-if [ "$DRONE_JOB_BUILDTYPE" == "boost" ]; then
-
 echo '==================================> BEFORE_INSTALL'
 
-. .drone/before-install.sh
+if [ "$VARIANT" = "beast_coverage" ] ; then
+    pip install --user https://github.com/codecov/codecov-python/archive/master.zip
+    wget http://downloads.sourceforge.net/ltp/lcov-1.14.tar.gz
+    tar -xvf lcov-1.14.tar.gz
+    cd lcov-1.14
+    make install && cd ..
+fi
+if [ "$VARIANT" = "beast_ubasan" ] ; then
+    export PATH="$PWD/llvm-$LLVM_VERSION/bin:$PATH"
+
+fi
+if [ "$TRAVIS_OS_NAME" = "osx" ] ; then
+    export OPENSSL_ROOT=$(brew --prefix openssl)
+fi
+
+# -------------------------------------------------------------------
+
+if [ "$DRONE_JOB_BUILDTYPE" == "boost" ]; then
 
 echo '==================================> INSTALL'
 
@@ -39,10 +54,6 @@ cd ../boost-root
 libs/beast/tools/retry.sh libs/beast/tools/build-and-test.sh
 
 elif [ "$DRONE_JOB_BUILDTYPE" == "docs" ]; then
-
-echo '==================================> BEFORE_INSTALL'
-
-. .drone/before-install.sh
 
 echo '==================================> INSTALL'
 
