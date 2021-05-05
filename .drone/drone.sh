@@ -4,7 +4,7 @@
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE.txt or copy at http://boost.org/LICENSE_1_0.txt)
 
-set -e
+set -xe
 export TRAVIS_BUILD_DIR=$(pwd)
 export DRONE_BUILD_DIR=$(pwd)
 export TRAVIS_BRANCH=$DRONE_BRANCH
@@ -47,6 +47,11 @@ export BOOST_ROOT=$(pwd)
 ./bootstrap.sh
 cp libs/beast/tools/user-config.jam ~/user-config.jam
 echo "using $TOOLSET : : $COMPILER : $CXX_FLAGS ;" >> ~/user-config.jam
+
+sudo updatedb
+echo "Debug1"
+locate libboost_context.so.1.77.0 || true
+locate libboost_context.so || true
 
 echo '==================================> SCRIPT'
 
