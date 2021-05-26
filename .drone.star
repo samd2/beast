@@ -22,8 +22,12 @@ def main(ctx):
   linux_cxx("valgrind", "clang++-6.0", packages="clang-6.0 libc6-dbg libc++-dev libstdc++-8-dev", llvm_os="bionic", llvm_ver="6.0", buildtype="valgrind", buildscript="drone", image=linuxglobalimage, environment={'COMMENT': 'valgrind', 'B2_TOOLSET': 'clang-6.0', 'B2_CXXSTD': '11,14', 'B2_DEFINES': 'BOOST_NO_STRESS_TEST=1', 'B2_VARIANT': 'debug', 'B2_TESTFLAGS': 'testing.launcher=valgrind', 'VALGRIND_OPTS': '--error-exitcode=1', 'DRONE_JOB_UUID': '1b64538924'}, globalenv=globalenv),
   # from previous .drone.star
   linux_cxx("GCC Valgrind", "g++", packages="g++-7 libssl-dev valgrind libc6-dbg", image="cppalliance/droneubuntu2004:1", buildtype="boost", buildscript="drone", environment={ "VARIANT": "beast_valgrind", "TOOLSET": "gcc", "COMPILER": "g++", "CXXSTD": "11" }),
-  # from previous .drone.star, switch to B2_ for all variables. Candidate for main choice.
+  # from previous .drone.star, switch to B2_ for all variables.
   linux_cxx("GCC Valgrind B2", "g++", packages="g++-7 libssl-dev valgrind libc6-dbg", image="cppalliance/droneubuntu2004:1", buildtype="boost", buildscript="drone", environment={ "B2_VARIANT": "beast_valgrind", "B2_TOOLSET": "gcc-7", "B2_CXXSTD": "11" }),
+  # classic. New candidate.
+  linux_cxx("GCC Valgrind original 1", "g++", packages="g++-7 libssl-dev valgrind libc6-dbg", image="cppalliance/droneubuntu2004:1", buildtype="valgrind_original", buildscript="drone", environment={ "VARIANT": "beast_valgrind", "TOOLSET": "gcc-7", "CXXSTD": "11" }),
+  # classic. New candidate.
+  linux_cxx("GCC Valgrind original 2", "g++", packages="g++-7 libssl-dev valgrind libc6-dbg", image="cppalliance/droneubuntu2004:1", buildtype="valgrind_original", buildscript="drone", environment={ "B2_VARIANT": "beast_valgrind", "B2_TOOLSET": "gcc-7", "B2_CXXSTD": "11" }),
   # "hybrid" invention
    linux_cxx("GCC Valgrind 2", "g++", packages="g++-7 libssl-dev valgrind libc6-dbg", image="cppalliance/droneubuntu2004:1", buildtype="boost", buildscript="drone", environment={ "B2_VARIANT": "beast_valgrind", "B2_COMPILER": "g++",'B2_TOOLSET': 'gcc-7', 'B2_CXXSTD': '11,14', 'B2_DEFINES': 'BOOST_NO_STRESS_TEST=1', 'B2_TESTFLAGS': 'testing.launcher=valgrind', 'VALGRIND_OPTS': '--error-exitcode=1', 'DRONE_JOB_UUID': '1b64538924' }),
   # "hybrid" invention without error-exitcode
