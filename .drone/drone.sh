@@ -4,7 +4,7 @@
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE.txt or copy at http://boost.org/LICENSE_1_0.txt)
 
-set -e
+set -ex
 
 export DRONE_BUILD_DIR=$(pwd)
 export VCS_COMMIT_ID=$DRONE_COMMIT
@@ -94,6 +94,7 @@ echo BOOST_BRANCH: $BOOST_BRANCH
 cd ..
 git clone -b $BOOST_BRANCH --depth 1 https://github.com/boostorg/boost.git boost-root
 cd boost-root
+export $BOOST_ROOT=$(pwd)
 cp -r $DRONE_BUILD_DIR/* libs/$SELF
 git submodule update --init tools/boostdep
 python tools/boostdep/depinst/depinst.py --git_args "--jobs 3" $SELF
@@ -103,6 +104,9 @@ python tools/boostdep/depinst/depinst.py --git_args "--jobs 3" $SELF
 echo '==================================> SCRIPT'
 
 cd $BOOST_ROOT
+# ls -al || true
+# ls -al libs/ || true
+# ls -al libs/beast/tools || true
 libs/beast/tools/retry.sh libs/beast/tools/build-and-test.sh
 
 elif [ "$DRONE_JOB_BUILDTYPE" == "coverity" ]; then
