@@ -85,6 +85,8 @@ elif [ "$DRONE_JOB_BUILDTYPE" == "valgrind_original" ]; then
 echo '==================================> INSTALL'
 
 export SELF=`basename $REPO_NAME`
+export BEAST_RETRY=False
+export TRAVIS=False
 
 BOOST_BRANCH=develop
 if [ "$DRONE_BRANCH" == "master" ]; then
@@ -95,6 +97,7 @@ cd ..
 git clone -b $BOOST_BRANCH --depth 1 https://github.com/boostorg/boost.git boost-root
 cd boost-root
 export BOOST_ROOT=$(pwd)
+export PATH=$PATH:$BOOST_ROOT
 cp -r $DRONE_BUILD_DIR/* libs/$SELF
 git submodule update --init tools/boostdep
 python tools/boostdep/depinst/depinst.py --git_args "--jobs 3" $SELF
