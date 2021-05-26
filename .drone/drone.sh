@@ -94,7 +94,7 @@ echo BOOST_BRANCH: $BOOST_BRANCH
 cd ..
 git clone -b $BOOST_BRANCH --depth 1 https://github.com/boostorg/boost.git boost-root
 cd boost-root
-export $BOOST_ROOT=$(pwd)
+export BOOST_ROOT=$(pwd)
 cp -r $DRONE_BUILD_DIR/* libs/$SELF
 git submodule update --init tools/boostdep
 python tools/boostdep/depinst/depinst.py --git_args "--jobs 3" $SELF
