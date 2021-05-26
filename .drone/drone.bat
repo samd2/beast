@@ -14,7 +14,7 @@ SET BOOST_BRANCH=develop
 IF "%DRONE_BRANCH%" == "master" SET BOOST_BRANCH=master
 cp tools\user-config.jam %USERPROFILE%\user-config.jam
 cd ..
-SET GET_BOOST=%DRONE_BUILD_DIR%\tools\get-boost.sh
+SET GET_BOOST=!DRONE_BUILD_DIR!\tools\get-boost.sh
 bash -c "$GET_BOOST $DRONE_BRANCH $DRONE_BUILD_DIR"
 cd boost-root
 call bootstrap.bat
