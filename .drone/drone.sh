@@ -102,6 +102,8 @@ cp -r $DRONE_BUILD_DIR/* libs/$SELF
 git submodule update --init tools/boostdep
 python tools/boostdep/depinst/depinst.py --git_args "--jobs 3" $SELF
 ./bootstrap.sh
+cp libs/beast/tools/user-config.jam ~/user-config.jam
+# echo "using $TOOLSET : : $COMPILER : $CXX_FLAGS ;" >> ~/user-config.jam
 ./b2 -d0 headers
 
 echo '==================================> SCRIPT'
