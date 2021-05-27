@@ -78,6 +78,7 @@ common_install
 echo '==================================> SCRIPT'
 
 cd $BOOST_ROOT/libs/$SELF
+echo "VALGRIND_OPTS is $VALGRIND_OPTS"
 ci/travis/valgrind.sh
 
 elif [ "$DRONE_JOB_BUILDTYPE" == "valgrind_original" ]; then
