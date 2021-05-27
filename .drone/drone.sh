@@ -27,17 +27,17 @@ common_install () {
     echo "macos - set up homebrew openssl"
     export OPENSSL_ROOT=/usr/local/opt/openssl 
 
-cat > ~/user-config.jam <<EOF
-import os ;
-local OPENSSL_ROOT = [ os.environ OPENSSL_ROOT ] ;
-project
-  : requirements
-    <include>/usr/local/opt/openssl/include
-    <variant>debug:<library-path>/usr/local/opt/openssl/lib
-    <target-os>windows<variant>debug:<library-path>/usr/local/opt/openssl/debug/lib
-    <variant>release:<library-path>/usr/local/opt/openssl/lib
-  ;
-EOF
+# cat > ~/user-config.jam <<EOF
+# import os ;
+# local OPENSSL_ROOT = [ os.environ OPENSSL_ROOT ] ;
+# project
+#   : requirements
+#     <include>/usr/local/opt/openssl/include
+#     <variant>debug:<library-path>/usr/local/opt/openssl/lib
+#     <target-os>windows<variant>debug:<library-path>/usr/local/opt/openssl/debug/lib
+#     <variant>release:<library-path>/usr/local/opt/openssl/lib
+#   ;
+# EOF
 
   fi
 
@@ -78,6 +78,7 @@ common_install
 echo '==================================> SCRIPT'
 
 cd $BOOST_ROOT/libs/$SELF
+VALGRIND_OPTS="$VALGRIND_OPTS --suppressions=$BOOST_ROOT/libs/$SELF/tools/valgrind.supp"
 echo "VALGRIND_OPTS is $VALGRIND_OPTS"
 ci/travis/valgrind.sh
 
