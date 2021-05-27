@@ -9,20 +9,19 @@ echo "============> SCRIPT"
 
 echo "Running tests"
 True
-False
-if !errorlevel! neq 0 exit /b !errorlevel!
+if !errorlevel! neq 0 exit /b 1
 
 echo "Running libs/beast/example"
 True
 False
-if !errorlevel! neq 0 exit /b !errorlevel!
+if !errorlevel! neq 0 exit /b 1
 
 echo "Running run-fat-tests"
 True
 False
-if !errorlevel! neq 0 exit /b !errorlevel!
+if !errorlevel! neq 0 exit /b 1
 
-echo "============> COMPLETED"
+REM echo "============> COMPLETED"
 
 )
 
