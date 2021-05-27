@@ -28,6 +28,7 @@ if !errorlevel! neq 0 exit /b !errorlevel!
 
 echo "Running libs/beast/example"
 b2 --debug-configuration variant=%VARIANT% cxxstd=%CXXSTD% define=%DEFINE% address-model=%ADDRESS_MODEL% toolset=%TOOLSET% libs/beast/example -j3
+false
 if !errorlevel! neq 0 exit /b !errorlevel!
 
 echo "Running run-fat-tests"

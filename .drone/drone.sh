@@ -27,18 +27,6 @@ common_install () {
     echo "macos - set up homebrew openssl"
     export OPENSSL_ROOT=/usr/local/opt/openssl 
 
-# cat > ~/user-config.jam <<EOF
-# import os ;
-# local OPENSSL_ROOT = [ os.environ OPENSSL_ROOT ] ;
-# project
-#   : requirements
-#     <include>/usr/local/opt/openssl/include
-#     <variant>debug:<library-path>/usr/local/opt/openssl/lib
-#     <target-os>windows<variant>debug:<library-path>/usr/local/opt/openssl/debug/lib
-#     <variant>release:<library-path>/usr/local/opt/openssl/lib
-#   ;
-# EOF
-
   fi
 
   export SELF=`basename $REPO_NAME`
@@ -69,20 +57,10 @@ echo '==================================> SCRIPT'
 cd $BOOST_ROOT/libs/$SELF
 ci/travis/codecov.sh
 
-elif [ "$DRONE_JOB_BUILDTYPE" == "valgrind" ]; then
+elif [ "$DRONE_JOB_BUILDTYPE" == "valgrind_v1" ]; then
 
-echo '==================================> INSTALL'
-
-common_install
-
-echo '==================================> SCRIPT'
-
-cd $BOOST_ROOT/libs/$SELF
-VALGRIND_OPTS="$VALGRIND_OPTS --suppressions=$BOOST_ROOT/libs/$SELF/tools/valgrind.supp"
-echo "VALGRIND_OPTS is $VALGRIND_OPTS"
-ci/travis/valgrind.sh
-
-elif [ "$DRONE_JOB_BUILDTYPE" == "valgrind_original" ]; then
+# this version of valgrind is based on the earlier boostorg/beast
+# .travis.yml configuration, which was passing.
 
 echo '==================================> INSTALL'
 
@@ -92,7 +70,7 @@ export TRAVIS=False
 
 BOOST_BRANCH=develop
 if [ "$DRONE_BRANCH" == "master" ]; then
-  BOOST_BRANCH=master 
+  BOOST_BRANCH=master
 fi
 echo BOOST_BRANCH: $BOOST_BRANCH
 cd ..
@@ -111,10 +89,20 @@ cp libs/beast/tools/user-config.jam ~/user-config.jam
 echo '==================================> SCRIPT'
 
 cd $BOOST_ROOT
-# ls -al || true
-# ls -al libs/ || true
-# ls -al libs/beast/tools || true
 libs/beast/tools/retry.sh libs/beast/tools/build-and-test.sh
+
+elif [ "$DRONE_JOB_BUILDTYPE" == "valgrind_v2" ]; then
+
+echo '==================================> INSTALL'
+
+common_install
+
+echo '==================================> SCRIPT'
+
+cd $BOOST_ROOT/libs/$SELF
+VALGRIND_OPTS="$VALGRIND_OPTS --suppressions=$BOOST_ROOT/libs/$SELF/tools/valgrind.supp"
+echo "VALGRIND_OPTS is $VALGRIND_OPTS"
+ci/travis/valgrind.sh
 
 elif [ "$DRONE_JOB_BUILDTYPE" == "coverity" ]; then
 
