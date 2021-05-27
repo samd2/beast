@@ -22,10 +22,22 @@ common_install () {
   cp -prf boost-ci-cloned/ci .
   rm -rf boost-ci-cloned
 
-  if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+if [ "$TRAVIS_OS_NAME" == "osx" ]; then
     unset -f cd
     echo "macos - set up homebrew openssl"
     export OPENSSL_ROOT=/usr/local/opt/openssl 
+
+cat > ~/user-config.jam <<EOF
+import os ;
+local OPENSSL_ROOT = [ os.environ OPENSSL_ROOT ] ;
+project
+  : requirements
+    <include>/usr/local/opt/openssl/include
+    <variant>debug:<library-path>/usr/local/opt/openssl/lib
+    <target-os>windows<variant>debug:<library-path>/usr/local/opt/openssl/debug/lib
+    <variant>release:<library-path>/usr/local/opt/openssl/lib
+  ;
+EOF
 
   fi
 
