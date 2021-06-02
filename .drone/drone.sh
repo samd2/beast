@@ -58,21 +58,9 @@ echo '==================================> SCRIPT'
 
 . $BOOST_ROOT/libs/$SELF/ci/build.sh
 
-elif [ "$DRONE_JOB_BUILDTYPE" == "codecov" ]; then
+elif [ "$DRONE_JOB_BUILDTYPE" == "boost_v1" ]; then
 
-echo '==================================> INSTALL'
-
-common_install
-
-echo '==================================> SCRIPT'
-
-cd $BOOST_ROOT/libs/$SELF
-ci/travis/codecov.sh
-
-elif [ "$DRONE_JOB_BUILDTYPE" == "valgrind_v1" ]; then
-
-# this version of valgrind is based on the earlier boostorg/beast
-# .travis.yml configuration, which was passing.
+# version based on the earlier boostorg/beast .travis.yml configuration
 
 echo '==================================> INSTALL'
 
@@ -103,7 +91,18 @@ echo '==================================> SCRIPT'
 cd $BOOST_ROOT
 libs/beast/tools/retry.sh libs/beast/tools/build-and-test.sh
 
-elif [ "$DRONE_JOB_BUILDTYPE" == "valgrind_v2" ]; then
+elif [ "$DRONE_JOB_BUILDTYPE" == "codecov" ]; then
+
+echo '==================================> INSTALL'
+
+common_install
+
+echo '==================================> SCRIPT'
+
+cd $BOOST_ROOT/libs/$SELF
+ci/travis/codecov.sh
+
+elif [ "$DRONE_JOB_BUILDTYPE" == "valgrind" ]; then
 
 echo '==================================> INSTALL'
 
