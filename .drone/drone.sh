@@ -50,9 +50,9 @@ EOF
 
 if  [ "$DRONE_BEFORE_INSTALL" == "beast_coverage" ]; then
     pip install --user https://github.com/codecov/codecov-python/archive/master.zip
-    wget http://downloads.sourceforge.net/ltp/lcov-1.15.tar.gz
-    tar -xvf lcov-1.15.tar.gz
-    cd lcov-1.15
+    wget http://downloads.sourceforge.net/ltp/lcov-1.14.tar.gz
+    tar -xvf lcov-1.14.tar.gz
+    cd lcov-1.14
     make install
     cd ..
 fi
