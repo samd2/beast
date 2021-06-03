@@ -95,6 +95,12 @@ cp libs/beast/tools/user-config.jam ~/user-config.jam
 # echo "using $TOOLSET : : $COMPILER : $CXX_FLAGS ;" >> ~/user-config.jam
 ./b2 -d0 headers
 
+echo '==================================> DEBUG'
+sudo updatedb
+locate libboost_context || true
+locate libboost_context.so || true
+locate libboost_context.so.1.77.0 || true
+
 echo '==================================> SCRIPT'
 
 cd $BOOST_ROOT
