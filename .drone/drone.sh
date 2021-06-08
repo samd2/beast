@@ -102,6 +102,9 @@ sudo updatedb
 locate libboost_context || true
 locate libboost_context.so || true
 locate libboost_context.so.1.77.0 || true
+which gcov || true
+gcov --version || true
+ls -al /usr/bin/gcov* || true
 
 echo '==================================> SCRIPT'
 
