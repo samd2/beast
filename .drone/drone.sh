@@ -63,7 +63,7 @@ if [ "$DRONE_JOB_BUILDTYPE" == "boost" ]; then
 echo '==================================> DEBUG'
 
 ls -al /usr/bin/clang* || true
-dpkg -l | grep -i clang 
+dpkg -l | grep -i clang || true
 
 echo '==================================> INSTALL'
 
