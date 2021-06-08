@@ -136,6 +136,7 @@ function build_bjam ()
 build_bjam
 
 if [[ $VARIANT == "beast_coverage" ]]; then
+  GCOV=${GCOV:-gcov}
   # for lcov to work effectively, the paths and includes
   # passed to the compiler should not contain "." or "..".
   # (this runs in $BOOST_ROOT)
