@@ -87,9 +87,11 @@ git clone -b $BOOST_BRANCH --depth 1 https://github.com/boostorg/boost.git boost
 cd boost-root
 export BOOST_ROOT=$(pwd)
 export PATH=$PATH:$BOOST_ROOT
-cp -r $DRONE_BUILD_DIR/* libs/$SELF
-git submodule update --init tools/boostdep
-python tools/boostdep/depinst/depinst.py --git_args "--jobs 3" $SELF
+git submodule update --init --depth 20 --jobs 4
+rm -rf libs/$SELF
+cp -r $DRONE_BUILD_DIR libs/$SELF
+# git submodule update --init tools/boostdep
+# python tools/boostdep/depinst/depinst.py --git_args "--jobs 3" $SELF
 ./bootstrap.sh
 cp libs/beast/tools/user-config.jam ~/user-config.jam
 echo "using $TOOLSET : : $COMPILER : $CXX_FLAGS ;" >> ~/user-config.jam
