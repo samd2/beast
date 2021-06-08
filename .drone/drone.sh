@@ -106,6 +106,7 @@ locate libboost_context.so.1.77.0 || true
 which gcov || true
 gcov --version || true
 ls -al /usr/bin/gcov* || true
+export LIB=$BOOST_ROOT/bin.v2/libs/atomic/build/clang-linux-11/debug/cxxstd-11-iso/threading-multi/visibility-hidden:$LIB
 
 echo '==================================> SCRIPT'
 
