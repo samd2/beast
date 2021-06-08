@@ -49,10 +49,11 @@ EOF
 }
 
 if  [ "$DRONE_BEFORE_INSTALL" == "beast_coverage" ]; then
+    LCOV_VERSION=${LCOV_VERSION:-1.14}
     pip install --user https://github.com/codecov/codecov-python/archive/master.zip
-    wget http://downloads.sourceforge.net/ltp/lcov-1.14.tar.gz
-    tar -xvf lcov-1.14.tar.gz
-    cd lcov-1.14
+    wget http://downloads.sourceforge.net/ltp/lcov-$LCOV_VERSION.tar.gz
+    tar -xvf lcov-$LCOV_VERSION.tar.gz
+    cd lcov-$LCOV_VERSION
     make install
     cd ..
 fi
