@@ -4,7 +4,7 @@
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE.txt or copy at http://boost.org/LICENSE_1_0.txt)
 
-set -ex
+set -xe
 
 export DRONE_BUILD_DIR=$(pwd)
 export VCS_COMMIT_ID=$DRONE_COMMIT
@@ -70,7 +70,7 @@ echo '==================================> SCRIPT'
 
 elif [ "$DRONE_JOB_BUILDTYPE" == "boost_v1" ]; then
 
-# version based on the earlier boostorg/beast .travis.yml configuration
+# version based on the earlier boost.beast .travis.yml configuration
 
 echo '==================================> INSTALL'
 
@@ -88,25 +88,15 @@ git clone -b $BOOST_BRANCH --depth 1 https://github.com/boostorg/boost.git boost
 cd boost-root
 export BOOST_ROOT=$(pwd)
 export PATH=$PATH:$BOOST_ROOT
+# git submodule update --init tools/boostdep
+# python tools/boostdep/depinst/depinst.py --git_args "--jobs 3" $SELF
 git submodule update --init --depth 20 --jobs 4
 rm -rf libs/$SELF
 cp -r $DRONE_BUILD_DIR libs/$SELF
-# git submodule update --init tools/boostdep
-# python tools/boostdep/depinst/depinst.py --git_args "--jobs 3" $SELF
 ./bootstrap.sh
 cp libs/beast/tools/user-config.jam ~/user-config.jam
 echo "using $TOOLSET : : $COMPILER : $CXX_FLAGS ;" >> ~/user-config.jam
 # ./b2 -d0 headers
-
-echo '==================================> DEBUG'
-sudo updatedb
-locate libboost_context || true
-locate libboost_context.so || true
-locate libboost_context.so.1.77.0 || true
-which gcov || true
-gcov --version || true
-ls -al /usr/bin/gcov* || true
-export LIB=$BOOST_ROOT/bin.v2/libs/atomic/build/clang-linux-11/debug/cxxstd-11-iso/threading-multi/visibility-hidden:$LIB
 
 echo '==================================> SCRIPT'
 
