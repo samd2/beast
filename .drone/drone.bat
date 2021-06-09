@@ -24,7 +24,6 @@ echo "============> SCRIPT"
 
 echo "Running tests"
 b2 --debug-configuration variant=%VARIANT% cxxstd=%CXXSTD% define=%DEFINE% address-model=%ADDRESS_MODEL% toolset=%TOOLSET% --verbose-test libs/beast/test -j3
-false
 if !errorlevel! neq 0 exit /b !errorlevel!
 
 echo "Running libs/beast/example"
