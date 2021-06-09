@@ -60,16 +60,15 @@ fi
 
 if [ "$DRONE_JOB_BUILDTYPE" == "boost" ]; then
 
-echo '==================================> DEBUG'
-
-ls -al /usr/bin/clang* || true
-dpkg -l | grep -i clang || true
-
 echo '==================================> INSTALL'
 
 common_install
 
 echo '==================================> SCRIPT'
+
+if [ -n "$COMPILER" ] && [ -n "$B2_TOOLSET" ]; ; then
+  echo "using $B2_TOOLSET : : $COMPILER ;" >> ~/user-config.jam
+fi
 
 . $BOOST_ROOT/libs/$SELF/ci/build.sh
 
