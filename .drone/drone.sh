@@ -66,7 +66,7 @@ common_install
 
 echo '==================================> SCRIPT'
 
-if [ -n "$COMPILER" ] && [ -n "$B2_TOOLSET" ]; ; then
+if [ -n "$COMPILER" ] && [ -n "$B2_TOOLSET" ]; then
   echo "using $B2_TOOLSET : : $COMPILER ;" >> ~/user-config.jam
 fi
 
