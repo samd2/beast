@@ -52,7 +52,7 @@ def main(ctx):
   linux_cxx("coverity", "g++", packages="", buildtype="coverity", buildscript="drone", image=linuxglobalimage, environment={'COMMENT': 'Coverity Scan', 'B2_TOOLSET': 'clang', 'DRONE_JOB_UUID': '472b07b9fc'}, globalenv=globalenv),
   windows_cxx("msvc-14.1", "", image="cppalliance/dronevs2017", buildtype="boost", buildscript="drone", environment={ "VARIANT": "release", "TOOLSET": "msvc-14.1", "CXXSTD": "17", "DEFINE" : "BOOST_BEAST_USE_STD_STRING_VIEW", "ADDRESS_MODEL": "64"}),
   windows_cxx("msvc-14.2", "", image="cppalliance/dronevs2019", buildtype="boost", buildscript="drone", environment={ "VARIANT": "release", "TOOLSET": "msvc-14.2", "CXXSTD": "17", "DEFINE" : "BOOST_BEAST_USE_STD_STRING_VIEW", "ADDRESS_MODEL": "64"}),
-  windows_cxx("msvc-14.3", "", image="cppalliance/dronevs2022", buildtype="boost", buildscript="drone", environment={ "VARIANT": "release", "TOOLSET": "msvc-14.3", "CXXSTD": "17", "DEFINE" : "BOOST_BEAST_USE_STD_STRING_VIEW", "ADDRESS_MODEL": "64"}),
+  windows_cxx("msvc-14.3", "", image="cppalliance/dronevs2022:1", buildtype="boost", buildscript="drone", environment={ "VARIANT": "release", "TOOLSET": "msvc-14.3", "CXXSTD": "17", "DEFINE" : "BOOST_BEAST_USE_STD_STRING_VIEW", "ADDRESS_MODEL": "64"}),
     ]
 
 # from https://github.com/boostorg/boost-ci
