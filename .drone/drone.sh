@@ -45,6 +45,7 @@ EOF
   export BOOST_CI_TARGET_BRANCH="$TRAVIS_BRANCH"
   export BOOST_CI_SRC_FOLDER=$(pwd)
 
+  which python || alias python=python3
   . ./ci/common_install.sh
 }
 
