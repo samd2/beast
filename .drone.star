@@ -14,6 +14,8 @@ windowsglobalimage="cppalliance/dronevs2019"
 
 def main(ctx):
   return [
+linux_cxx("clang 12 s390x", "clang++-12", packages="clang-12 libc6-dbg libc++-dev libstdc++-9-dev", llvm_os="focal", llvm_ver="12", buildtype="boost", buildscript="drone", image="cppalliance/droneubuntu2004:multiarch", environment={'B2_TOOLSET': 'clang', 'COMPILER': 'clang++-12', 'B2_CXXSTD': '11,14,17,20', 'B2_ARGS': 'architecture=s390x'}, arch="s390x", globalenv=globalenv),
+  linux_cxx("gcc 11 s390x", "g++-11", packages="g++-11", buildtype="boost", buildscript="drone", image="cppalliance/droneubuntu2004:multiarch", environment={'B2_TOOLSET': 'gcc-11', 'B2_CXXSTD': '17,2a', 'B2_ARGS': 'architecture=s390x'}, arch="s390x", globalenv=globalenv),
   linux_cxx("clang 12 arm64", "clang++-12", packages="clang-12 libc6-dbg libc++-dev libstdc++-9-dev", llvm_os="focal", llvm_ver="12", buildtype="boost", buildscript="drone", image="cppalliance/droneubuntu2004:multiarch", environment={'B2_TOOLSET': 'clang', 'COMPILER': 'clang++-12', 'B2_CXXSTD': '11,14,17,20', 'DRONE_JOB_UUID': '9e6a55b6b5m'}, arch="arm64", globalenv=globalenv),
   linux_cxx("gcc 11 arm64", "g++-11", packages="g++-11", buildtype="boost", buildscript="drone", image="cppalliance/droneubuntu2004:multiarch", environment={'B2_TOOLSET': 'gcc-11', 'B2_CXXSTD': '17,2a', 'DRONE_JOB_UUID': '17ba079169m'}, arch="arm64", globalenv=globalenv),
   # A set of jobs based on the earlier .travis.yml configuration:
