@@ -18,7 +18,8 @@ export TRAVIS_BRANCH=$DRONE_BRANCH
 export TRAVIS_EVENT_TYPE=$DRONE_BUILD_EVENT
 
 common_install () {
-  git clone https://github.com/boostorg/boost-ci.git boost-ci-cloned --depth 1
+  # git clone https://github.com/boostorg/boost-ci.git boost-ci-cloned --depth 1
+  git clone -b s390x https://github.com/samd2/boost-ci.git boost-ci-cloned --depth 1
   cp -prf boost-ci-cloned/ci .
   rm -rf boost-ci-cloned
 
