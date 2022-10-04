@@ -71,7 +71,17 @@ if [ -n "$COMPILER" ] && [ -n "$B2_TOOLSET" ]; then
   echo "using $B2_TOOLSET : : $COMPILER ;" >> ~/user-config.jam
 fi
 
+# debugging
+
+set +e
+
 . $BOOST_ROOT/libs/$SELF/ci/build.sh
+
+ls -al $BOOST_ROOT/libs/context/build
+pwd
+cd $BOOST_ROOT/libs/context
+git branch
+git log -2
 
 elif [ "$DRONE_JOB_BUILDTYPE" == "boost_v1" ]; then
 
