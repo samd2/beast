@@ -97,11 +97,6 @@ export PATH=$PATH:$BOOST_ROOT
 # python tools/boostdep/depinst/depinst.py --git_args "--jobs 3" $SELF
 git submodule update --init --depth 20 --jobs 4
 
-# debug boostorg/context
-cd libs/context
-git checkout develop-#208
-cd ../..
-
 rm -rf libs/$SELF
 cp -r $DRONE_BUILD_DIR libs/$SELF
 ./bootstrap.sh
