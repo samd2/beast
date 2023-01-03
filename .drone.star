@@ -8,7 +8,7 @@
 # As the yaml syntax for Drone CI is rather limited.
 #
 #
-globalenv={'B2_CI_VERSION': '1', 'B2_VARIANT': 'release'}
+globalenv={'B2_CI_VERSION': '1', 'B2_VARIANT': 'release', 'VARIANT': 'release'}
 linuxglobalimage="cppalliance/droneubuntu1804:1"
 windowsglobalimage="cppalliance/dronevs2019"
 
@@ -29,7 +29,6 @@ def main(ctx):
    ]
 
   generatedjobs = generate(
-        # Compilers
         ['gcc >=4.8',
          'clang >=3.8',
          'msvc >=14.1',
@@ -39,8 +38,9 @@ def main(ctx):
          'arm64-clang latest',
          's390x-clang latest',
          'x64-msvc latest'],
-        # Standards
-        '>=11')
+         '>=11',
+         docs=False, warnings_as_errors=False
+)
 
   alljobs.extend(generatedjobs)
   alljobs.extend(customizedjobs)
