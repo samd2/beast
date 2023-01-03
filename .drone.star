@@ -24,7 +24,6 @@ def main(ctx):
   linux_cxx("GCC 8, C++17, libstdc++, release", "g++-8", packages="g++-8 mlocate", image="cppalliance/droneubuntu1604:1", buildtype="boost_v1", buildscript="drone", environment={  "VARIANT": "release", "TOOLSET": "gcc", "COMPILER": "g++-8", "CXXSTD" : "17" }, globalenv=globalenv),
   linux_cxx("Clang 15, UBasan", "clang++-15", packages="clang-15 libssl-dev mlocate", llvm_os="jammy", llvm_ver="15", image="cppalliance/droneubuntu2204:1", buildtype="boost_v1", buildscript="drone", environment={"VARIANT": "beast_ubasan", "TOOLSET": "clang", "COMPILER": "clang++-15", "CXXSTD": "17", "UBSAN_OPTIONS": 'print_stacktrace=1', "DRONE_BEFORE_INSTALL": "UBasan" }, globalenv=globalenv),
   linux_cxx("docs", "", packages="docbook docbook-xml docbook-xsl xsltproc libsaxonhe-java default-jre-headless flex libfl-dev bison unzip rsync mlocate", image="cppalliance/droneubuntu1804:1", buildtype="docs", buildscript="drone", environment={"COMMENT": "docs"}, globalenv=globalenv),
-  # Next, a standard list of tests from boost-ci:
   *generate(
         # Compilers
         ['gcc >=4.8',
@@ -42,3 +41,4 @@ def main(ctx):
 
 # from https://github.com/boostorg/boost-ci
 load("@boost_ci//ci/drone/:functions.star", "linux_cxx","windows_cxx","osx_cxx","freebsd_cxx")
+load("@url//.drone.star", "generate")
