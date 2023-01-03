@@ -13,7 +13,9 @@ linuxglobalimage="cppalliance/droneubuntu1804:1"
 windowsglobalimage="cppalliance/dronevs2019"
 
 def main(ctx):
-  return [
+
+  alljobs=[]
+  customizedjobs = [
   freebsd_cxx("gcc 11 freebsd", "g++-11", buildtype="boost", buildscript="drone", freebsd_version="13.1", environment={'B2_TOOLSET': 'gcc-11', 'B2_CXXSTD': '17,20', 'B2_LINKFLAGS': '-Wl,-rpath=/usr/local/lib/gcc11'}, globalenv=globalenv),
   freebsd_cxx("clang 14 freebsd", "clang++-14", buildtype="boost", buildscript="drone", freebsd_version="13.1", environment={'B2_TOOLSET': 'clang-14', 'B2_CXXSTD': '17,20'}, globalenv=globalenv),
   # A set of customized jobs based on the earlier .travis.yml configuration:
@@ -24,7 +26,9 @@ def main(ctx):
   linux_cxx("GCC 8, C++17, libstdc++, release", "g++-8", packages="g++-8 mlocate", image="cppalliance/droneubuntu1604:1", buildtype="boost_v1", buildscript="drone", environment={  "VARIANT": "release", "TOOLSET": "gcc", "COMPILER": "g++-8", "CXXSTD" : "17" }, globalenv=globalenv),
   linux_cxx("Clang 15, UBasan", "clang++-15", packages="clang-15 libssl-dev mlocate", llvm_os="jammy", llvm_ver="15", image="cppalliance/droneubuntu2204:1", buildtype="boost_v1", buildscript="drone", environment={"VARIANT": "beast_ubasan", "TOOLSET": "clang", "COMPILER": "clang++-15", "CXXSTD": "17", "UBSAN_OPTIONS": 'print_stacktrace=1', "DRONE_BEFORE_INSTALL": "UBasan" }, globalenv=globalenv),
   linux_cxx("docs", "", packages="docbook docbook-xml docbook-xsl xsltproc libsaxonhe-java default-jre-headless flex libfl-dev bison unzip rsync mlocate", image="cppalliance/droneubuntu1804:1", buildtype="docs", buildscript="drone", environment={"COMMENT": "docs"}, globalenv=globalenv),
-  *generate(
+   ]
+
+  generatedjobs = generate(
         # Compilers
         ['gcc >=4.8',
          'clang >=3.8',
@@ -37,8 +41,11 @@ def main(ctx):
          'x64-msvc latest'],
         # Standards
         '>=11')
-    ]
+
+  alljobs.extend(generatedjobs)
+  alljobs.extend(customizedjobs)
+  return alljobs
 
 # from https://github.com/boostorg/boost-ci
 load("@boost_ci//ci/drone/:functions.star", "linux_cxx","windows_cxx","osx_cxx","freebsd_cxx")
-load("@url//.drone.star", "generate")
+load("@url//:.drone.star", "generate")
