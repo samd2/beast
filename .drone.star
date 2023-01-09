@@ -41,7 +41,7 @@ def main(ctx):
          's390x-gcc latest',
          'arm64-clang latest',
          's390x-clang latest'],
-         '=17',
+         '<=17',
          docs=False, warnings_as_errors=False
 )
 
