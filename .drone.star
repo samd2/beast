@@ -36,12 +36,12 @@ def main(ctx):
 
   generatedjobs = generate(
         ['gcc >=4.8',
-         'clang ^15',
+         'clang <=14',
          'arm64-gcc latest',
          's390x-gcc latest',
          'arm64-clang latest',
          's390x-clang latest'],
-         '<=17||>=11',
+         '>=11',
          docs=False, warnings_as_errors=False
 )
 
