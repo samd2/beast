@@ -119,7 +119,9 @@ def generate(compiler_ranges, cxx_range, max_cxx=2, coverage=True, docs=True, as
             asan_desc = latest_gcc[:]
             asan_desc[2] = 'asan'
             compilers = [asan_desc] + compilers
-            # compilers = ['17']
+            compilers = []
+            x = ['gcc', '17', 'boost']
+            compilers.append(x)
         if tsan:
             tsan_desc = latest_gcc[:]
             tsan_desc[2] = 'tsan'
@@ -128,7 +130,9 @@ def generate(compiler_ranges, cxx_range, max_cxx=2, coverage=True, docs=True, as
             ubsan_desc = latest_gcc[:]
             ubsan_desc[2] = 'ubsan'
             compilers = [ubsan_desc] + compilers
-            # compilers = ['17']
+            compilers = []
+            x = ['gcc', '17', 'boost']
+            compilers.append(x)
         if docs:
             docs_desc = latest_gcc[:]
             docs_desc[2] = 'docs'
