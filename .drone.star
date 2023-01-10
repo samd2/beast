@@ -29,22 +29,24 @@ def main(ctx):
   linux_cxx("ubsan g++-12", "g++-12", packages="g++-12", buildtype="boost", buildscript="drone", image="cppalliance/droneubuntu2204:1", environment={'COMMENT': 'ubsan', 'B2_VARIANT': 'debug', 'B2_TOOLSET': 'gcc-12', 'B2_CXXSTD': '14,17,20', 'B2_UBSAN': '1', 'B2_DEFINES': 'BOOST_NO_STRESS_TEST=1', 'B2_LINKFLAGS': '-fuse-ld=gold'}, globalenv=globalenv),
   osx_cxx("clang", "g++", packages="", buildtype="boost", buildscript="drone", environment={'B2_TOOLSET': 'clang', 'B2_CXXSTD': '11,17', 'DRONE_JOB_UUID': '91032ad7bb'}, globalenv=globalenv),
  
-  windows_cxx("msvc-14.1 14", "", image="cppalliance/dronevs2017", buildtype="boost", buildscript="drone", environment={ "VARIANT": "release", "TOOLSET": "msvc-14.1", "CXXSTD": "14", "ADDRESS_MODEL": "64"}),
-  windows_cxx("msvc-14.1", "", image="cppalliance/dronevs2017", buildtype="boost", buildscript="drone", environment={ "VARIANT": "release", "TOOLSET": "msvc-14.1", "CXXSTD": "17", "ADDRESS_MODEL": "64"}),
-  windows_cxx("msvc-14.2 14", "", image="cppalliance/dronevs2019", buildtype="boost", buildscript="drone", environment={ "VARIANT": "release", "TOOLSET": "msvc-14.2", "CXXSTD": "14", "ADDRESS_MODEL": "64"}),
-  windows_cxx("msvc-14.2", "", image="cppalliance/dronevs2019", buildtype="boost", buildscript="drone", environment={ "VARIANT": "release", "TOOLSET": "msvc-14.2", "CXXSTD": "17", "ADDRESS_MODEL": "64"}),
-  windows_cxx("msvc-14.3 17", "", image="cppalliance/dronevs2022:1", buildtype="boost", buildscript="drone", environment={ "VARIANT": "release", "TOOLSET": "msvc-14.3", "CXXSTD": "17", "ADDRESS_MODEL": "64"}),
-  windows_cxx("msvc-14.3", "", image="cppalliance/dronevs2022:1", buildtype="boost", buildscript="drone", environment={ "VARIANT": "release", "TOOLSET": "msvc-14.3", "CXXSTD": "20", "ADDRESS_MODEL": "64"}),
+  # windows_cxx("msvc-14.1 14", "", image="cppalliance/dronevs2017", buildtype="boost", buildscript="drone", environment={ "VARIANT": "release", "TOOLSET": "msvc-14.1", "CXXSTD": "14", "ADDRESS_MODEL": "64"}),
+  # windows_cxx("msvc-14.1", "", image="cppalliance/dronevs2017", buildtype="boost", buildscript="drone", environment={ "VARIANT": "release", "TOOLSET": "msvc-14.1", "CXXSTD": "17", "ADDRESS_MODEL": "64"}),
+  # windows_cxx("msvc-14.2 14", "", image="cppalliance/dronevs2019", buildtype="boost", buildscript="drone", environment={ "VARIANT": "release", "TOOLSET": "msvc-14.2", "CXXSTD": "14", "ADDRESS_MODEL": "64"}),
+  # windows_cxx("msvc-14.2", "", image="cppalliance/dronevs2019", buildtype="boost", buildscript="drone", environment={ "VARIANT": "release", "TOOLSET": "msvc-14.2", "CXXSTD": "17", "ADDRESS_MODEL": "64"}),
+  # windows_cxx("msvc-14.3 17", "", image="cppalliance/dronevs2022:1", buildtype="boost", buildscript="drone", environment={ "VARIANT": "release", "TOOLSET": "msvc-14.3", "CXXSTD": "17", "ADDRESS_MODEL": "64"}),
+  # windows_cxx("msvc-14.3", "", image="cppalliance/dronevs2022:1", buildtype="boost", buildscript="drone", environment={ "VARIANT": "release", "TOOLSET": "msvc-14.3", "CXXSTD": "20", "ADDRESS_MODEL": "64"}),
 
    ]
 
   generatedjobs = generate(
         ['gcc >4.8',
         'clang >3.8',
+        'msvc >=14.1',
         'arm64-gcc latest',
         # 's390x-gcc latest',
         'arm64-clang latest',
-        # 's390x-clang latest'
+        # 's390x-clang latest',
+         'x64-msvc latest',
         ],
         '>=11',
         docs=False, ubsan=False, warnings_as_errors=False
