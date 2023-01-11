@@ -409,7 +409,7 @@ def generate(compiler_ranges, cxx_range, max_cxx=2, coverage=True, docs=True, as
                     xcode_version="13.4.1",
                     environment=environment,
                     globalenv=globalenv))
-        elif compiler == 'freebsd':
+        elif compiler.startswith('freebsd'):
             jobs.append(
                 freebsd_cxx(
                     name,
