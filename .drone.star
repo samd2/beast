@@ -37,7 +37,7 @@ def main(ctx):
          'arm64-gcc latest',
          's390x-gcc latest',
          'freebsd-gcc latest',
-         'apple-clang *',
+         'apple-clang <=12.4',
          'arm64-clang latest',
          's390x-clang latest',
          'freebsd-clang latest',
