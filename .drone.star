@@ -29,10 +29,13 @@ def main(ctx):
   windows_cxx("msvc-14.3", "", image="cppalliance/dronevs2022:1", buildtype="boost", buildscript="drone", environment={ "VARIANT": "release", "TOOLSET": "msvc-14.3", "CXXSTD": "20", "ADDRESS_MODEL": "64"}),
    ]
 
+# Fails all clang:
+# 'clang >=3.8 <13',
+
   generatedjobs = generate(
         # Compilers
         ['gcc >=4.8',
-         'clang >=3.8 <13',
+         'clang >=3.8 <=13',
          # 'msvc >=14.1',
          'arm64-gcc latest',
          's390x-gcc latest',
