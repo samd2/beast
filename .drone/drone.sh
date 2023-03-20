@@ -327,4 +327,3 @@ elif [ "$DRONE_JOB_BUILDTYPE" == "coverity" ]; then
   fi
 
 fi
-
