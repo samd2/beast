@@ -28,8 +28,24 @@ if command -v "$CXX" &>/dev/null; then
 fi
 
 common_install() {
-  if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+
+if [ "$TRAVIS_OS_NAME" == "osx" ]; then
     unset -f cd
+    echo "macos - set up homebrew openssl"
+    export OPENSSL_ROOT=/usr/local/opt/openssl
+
+cat > ~/user-config.jam <<EOF
+import os ;
+local OPENSSL_ROOT = [ os.environ OPENSSL_ROOT ] ;
+project
+  : requirements
+    <include>/usr/local/opt/openssl/include
+    <variant>debug:<library-path>/usr/local/opt/openssl/lib
+    <target-os>windows<variant>debug:<library-path>/usr/local/opt/openssl/debug/lib
+    <variant>release:<library-path>/usr/local/opt/openssl/lib
+  ;
+EOF
+
   fi
 
   # The name of the current module
@@ -84,24 +100,29 @@ common_install() {
   if [ ! -d "cache" ]; then
     mkdir "cache"
     boost_cache_hit=false
+    echo "DEBUG boost_cache_hit is false 1"
   else
     if [ -d "cache/boost" ]; then
       if [ -f "cache/boost_cache_key.txt" ]; then
         boost_cached_key=$(cat cache/boost_cache_key.txt)
         if [ "$boost_cache_key" == "$boost_cached_key" ] && [ -f "cache/boost/.gitmodules" ]; then
           boost_cache_hit=true
+          echo "DEBUG boost_cache_hit is true 1"
         else
           echo "boost_cached_key=$boost_cached_key (expected $boost_cache_key)"
           rm -rf "cache/boost"
           boost_cache_hit=false
+          echo "DEBUG boost_cache_hit is false 2"
         fi
       else
         echo "Logic error: cache/boost stored without boost_cache_key.txt"
         rm -rf "cache/boost"
+        echo "DEBUG boost_cache_hit is false 3"
         boost_cache_hit=false
       fi
     else
       boost_cache_hit=false
+      echo "DEBUG boost_cache_hit is false 4"
     fi
   fi
 
@@ -121,6 +142,7 @@ common_install() {
     if command -v apt-get &>/dev/null; then
       apt-get install -y rsync
     fi
+    echo "DEBUG resync 1"
     rsync -a "$cache_dir/boost/" "$BOOST_ROOT"
     rm -rf "$BOOST_ROOT/libs/$SELF"
     mkdir "$BOOST_ROOT/libs/$SELF"
@@ -133,6 +155,7 @@ common_install() {
       apt-get install -y rsync
     fi
     mkdir -p "$cache_dir"/boost
+    echo "DEBUG resync 2"
     rsync -a --delete "$BOOST_ROOT/" "$cache_dir/boost" --exclude "$BOOST_ROOT/libs/$SELF/cache"
     # and as a double measure
     rm -rf $cache_dir/boost/libs/$SELF/cache
@@ -157,7 +180,7 @@ elif [ "$DRONE_JOB_BUILDTYPE" == "boost_v1" ]; then
   
   echo '==================================> INSTALL'
   
-  export SELF=`basename $REPO_NAME`
+  export SELF=`basename $DRONE_REPO`
   export BEAST_RETRY=False
   export TRAVIS=False
   
