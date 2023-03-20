@@ -198,7 +198,7 @@ elif [ "$DRONE_JOB_BUILDTYPE" == "boost_v1" ]; then
   # python tools/boostdep/depinst/depinst.py --git_args "--jobs 3" $SELF
   git submodule update --init --depth 20 --jobs 4
   rm -rf libs/$SELF
-  cp -r $DRONE_BUILD_DIR libs/$SELF
+  cp -r $DRONE_WORKSPACE libs/$SELF
   ./bootstrap.sh
   cp libs/beast/tools/user-config.jam ~/user-config.jam
   echo "using $TOOLSET : : $COMPILER : $CXX_FLAGS ;" >> ~/user-config.jam
