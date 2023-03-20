@@ -171,7 +171,11 @@ if [ "$DRONE_JOB_BUILDTYPE" == "boost" ]; then
 
   echo '==================================> SCRIPT'
 
-  export B2_TARGETS=${B2_TARGETS:-"libs/$SELF/test libs/$SELF/example"}
+  # export B2_TARGETS=${B2_TARGETS:-"libs/$SELF/test libs/$SELF/example"}
+  if [ -n "$COMPILER" ] && [ -n "$B2_TOOLSET" ]; then
+    echo "using $B2_TOOLSET : : $COMPILER ;" >> ~/user-config.jam
+  fi
+
   "$BOOST_ROOT/libs/$SELF/ci/travis/build.sh"
 
 elif [ "$DRONE_JOB_BUILDTYPE" == "boost_v1" ]; then
