@@ -10,6 +10,9 @@
 #
 globalenv={'B2_CI_VERSION': '1', 'B2_VARIANT': 'release'}
 
+# node={'env': 'win2025'} in a job to test such a label 
+node={}
+
 def main(ctx):
 
   alljobs=[]
@@ -24,9 +27,9 @@ def main(ctx):
   linux_cxx("docs", "", packages="docbook docbook-xml docbook-xsl xsltproc libsaxonhe-java default-jre-headless flex libfl-dev bison unzip rsync mlocate", image="cppalliance/droneubuntu1804:1", buildtype="docs", buildscript="drone", environment={"COMMENT": "docs"}, globalenv=globalenv),
   linux_cxx("GCC 14, UBasan", "g++-14", packages="g++-14", buildtype="boost", buildscript="drone", image="cppalliance/droneubuntu2404:1", environment={'COMMENT': 'ubsan', 'B2_VARIANT': 'debug', 'B2_TOOLSET': 'gcc-14', 'B2_CXXSTD': '14,17,20,23', 'B2_UBSAN': '1', 'B2_DEFINES': 'BOOST_NO_STRESS_TEST=1', 'B2_LINKFLAGS': '-fuse-ld=gold'}, globalenv=globalenv, privileged=True),
   linux_cxx("coverity", "g++", packages="", buildtype="coverity", buildscript="drone", image="cppalliance/droneubuntu1804:1", environment={'COMMENT': 'Coverity Scan', 'B2_TOOLSET': 'clang', 'DRONE_JOB_UUID': '472b07b9fc'}, globalenv=globalenv),
-  windows_cxx("msvc-14.1", "", image="cppalliance/dronevs2017", node={'env': 'win2025'}, buildtype="boost", buildscript="drone", environment={ "VARIANT": "release", "TOOLSET": "msvc-14.1", "CXXSTD": "17", "ADDRESS_MODEL": "64"}),
-  windows_cxx("msvc-14.2", "", image="cppalliance/dronevs2019", node={'env': 'win2025'},  buildtype="boost", buildscript="drone", environment={ "VARIANT": "release", "TOOLSET": "msvc-14.2", "CXXSTD": "17", "ADDRESS_MODEL": "64"}),
-  windows_cxx("msvc-14.3", "", image="cppalliance/dronevs2022:1", node={'env': 'win2025'}, buildtype="boost", buildscript="drone", environment={ "VARIANT": "release", "TOOLSET": "msvc-14.3", "CXXSTD": "20", "ADDRESS_MODEL": "64"}),
+  windows_cxx("msvc-14.1", "", image="cppalliance/dronevs2017", node=node, buildtype="boost", buildscript="drone", environment={ "VARIANT": "release", "TOOLSET": "msvc-14.1", "CXXSTD": "17", "ADDRESS_MODEL": "64"}),
+  windows_cxx("msvc-14.2", "", image="cppalliance/dronevs2019", node=node,  buildtype="boost", buildscript="drone", environment={ "VARIANT": "release", "TOOLSET": "msvc-14.2", "CXXSTD": "17", "ADDRESS_MODEL": "64"}),
+  windows_cxx("msvc-14.3", "", image="cppalliance/dronevs2022:1", node=node, buildtype="boost", buildscript="drone", environment={ "VARIANT": "release", "TOOLSET": "msvc-14.3", "CXXSTD": "20", "ADDRESS_MODEL": "64"}),
    ]
 
   generatedjobs = generate(
